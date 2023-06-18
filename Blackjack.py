@@ -3,6 +3,15 @@ import os
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 results = {'wins': 0, 'draws': 0, 'losses': 0}
 
+def change_ace(hand):
+    # changes ace value from 11 to 1
+    if hand == player_cards:
+        player_cards.remove(11)
+        player_cards.append(1)
+    else:
+        dealer_cards.remove(11)
+        dealer_cards.append(1)
+
 # main game
 play = True
 while play:
@@ -17,8 +26,7 @@ while play:
 
     # changes ace to 1 if player gets 2 aces at the start
     if sum(player_cards) == 22:
-        player_cards.remove(11)
-        player_cards.append(1)
+        change_ace(player_cards)
 
     # introducing player to new set of cards
     print("\nWelcome to Blackjack!")
@@ -33,8 +41,7 @@ while play:
             # checks for bust and changes ace if in player hand
             if sum(player_cards) > 21:
                 if 11 in player_cards:
-                    player_cards.remove(11)
-                    player_cards.append(1)
+                    change_ace(player_cards)
                 else:
                     break
             print(f"\nDealer's card: {dealer_cards[0]}")
@@ -46,15 +53,13 @@ while play:
 
     # changes ace to 1 if dealer gets 2 aces at the start
     if sum(dealer_cards) == 22:
-        dealer_cards.remove(11)
-        dealer_cards.append(1)
+        change_ace(dealer_cards)
 
     # dealer draws their cards
     while sum(dealer_cards) < 17:
         dealer_cards.append(random.choice(cards))
         if sum(dealer_cards) > 21 and 11 in dealer_cards:
-            dealer_cards.remove(11)
-            dealer_cards.append(1)
+            change_ace(dealer_cards)
 
     # game results
     if sum(player_cards) > 21:
